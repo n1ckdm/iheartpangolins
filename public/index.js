@@ -1,17 +1,17 @@
+let sadNum = 0;
+let pageOpen = (new Date()).getTime();
 
-function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
-        }
-    }
-    rawFile.send(null);
+function update() {
+    let now = new Date(),
+    then = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        0,0,0),
+    diff = (now.getTime() - then.getTime())/1000;
+    diff2 = (now.getTime() - pageOpen)/1000;
+    pdr_sec = 300/(3600*24)
+    document.getElementById("sad").innerText = (diff2*pdr_sec).toFixed(2);
+    document.getElementById("sad2").innerText = (diff*pdr_sec).toFixed(2);
 }
-
-readTextFile("particlesjs-config.json", function(text){
-    particlesJS("particles-js", JSON.parse(text));
-});
-
+setInterval(update, 1000);
